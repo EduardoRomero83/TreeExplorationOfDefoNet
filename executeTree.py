@@ -15,7 +15,7 @@ Created on Mon Feb  7 20:00:28 2022
 @author: Eduardo Romero
 """
 
-pixels = 10
+pixels = 1
 colorChannels = 1
 debugMode = False
 imageSize = pixels * pixels * colorChannels
@@ -32,9 +32,10 @@ def imageToNumpy(imageFile):
     image = Image.open(imageFile)
     image = image.resize((pixels,pixels))
     data = asarray(image)
-    bandwimage = rgb2gray(data)
-    values = filters.threshold_otsu(bandwimage)
-    data = bandwimage < values
+    if colorChannels == 1:
+        bandwimage = rgb2gray(data)
+        values = filters.threshold_otsu(bandwimage)
+        data = bandwimage < values
     data = data.reshape(imageSize)
     return data
 
