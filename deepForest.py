@@ -35,7 +35,7 @@ class DeepForest:
             
         
 if __name__ == "__main__":
-    listOfClassifiers = ["forest"] * 100
+    listOfClassifiers = ["tree"] * 1
     deepForest = DeepForest(listOfClassifiers)
     deepForest.train()
     deepForest.test()  
