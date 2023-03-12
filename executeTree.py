@@ -254,7 +254,7 @@ class Classifier:
         
 
 if __name__ == "__main__":
-    for i in range(9):
+    for i in range(1):
         print("Execution number: " + str(i+1))
         classifier = Classifier("forest")
         #classifier.test()
