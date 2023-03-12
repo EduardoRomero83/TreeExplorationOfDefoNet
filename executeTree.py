@@ -254,6 +254,8 @@ class Classifier:
         
 
 if __name__ == "__main__":
+    print ("Content-type: text/html")
+    print ("")
     for i in range(1):
         print("Execution number: " + str(i+1))
         classifier = Classifier("forest")
