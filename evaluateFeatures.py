@@ -17,7 +17,9 @@ res = dns.resolver.Resolver(configure=False)
 res.nameservers = [ kubedns ]
 
 
-
+print ("Content-type: text/html")
+print ("")
+print ("preparing execution")
 
 form = cgi.FieldStorage()
 item = str(form.getvalue("ms"))
@@ -26,6 +28,7 @@ port = str(form.getvalue("port"))
 item = item + ".default.svc.cluster.local"
 r = res.query(item, 'A')
 ipaddr = str(r[0])
+print ("starting execution")
 with urllib.request.urlopen('http://'+ipaddr+':'+port+'/cgi-bin/executeTree.py') as response:
    html = response.read()
 
