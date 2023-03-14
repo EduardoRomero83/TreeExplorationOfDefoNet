@@ -1,3 +1,5 @@
+
+#!/usr/bin/python3
 from numpy import asarray
 import numpy as np
 from sklearn.tree import DecisionTreeClassifier

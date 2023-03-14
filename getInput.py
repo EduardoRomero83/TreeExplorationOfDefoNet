@@ -15,7 +15,7 @@ from attention import Attention
 class InputReader:
     
     def __init__(self):
-        self.pixels = 108
+        self.pixels = 4
         self.colorChannels = 1
         self.rotationAngles = []
         self.numAttentionRegions = 4
