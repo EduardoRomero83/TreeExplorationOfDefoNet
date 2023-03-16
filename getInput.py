@@ -21,9 +21,9 @@ class InputReader:
         self.numAttentionRegions = 4
         self.regionSize = 4
         self.useAttention = False
-        self.maxImages = 40000
+        self.maxImages = 400
         self.minNeg = self.maxImages / 2
-        self.limitImages = False
+        self.limitImages = True
         self.imageSize = (self.pixels * self.pixels 
                           * self.colorChannels)
         if self.useAttention:
