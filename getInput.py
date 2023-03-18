@@ -15,7 +15,7 @@ from attention import Attention
 class InputReader:
     
     def __init__(self):
-        self.pixels = 4
+        self.pixels = 108
         self.colorChannels = 1
         self.rotationAngles = []
         self.numAttentionRegions = 4
@@ -23,7 +23,7 @@ class InputReader:
         self.useAttention = False
         self.maxImages = 400
         self.minNeg = self.maxImages / 2
-        self.limitImages = True
+        self.limitImages = False
         self.imageSize = (self.pixels * self.pixels 
                           * self.colorChannels)
         if self.useAttention:
