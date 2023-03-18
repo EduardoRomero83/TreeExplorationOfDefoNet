@@ -8,7 +8,6 @@ Created on Sun Mar 12 16:18:25 2023
 import cgi
 import cgitb
 import os
-import urllib.request
 import dns.resolver
 
 cgitb.enable()
@@ -25,11 +24,8 @@ port = str(form.getvalue("port"))
 item = item + ".default.svc.cluster.local"
 r = res.resolve(item, 'A')
 ipaddr = str(r[0])
-# os.command)wget ...) & run execute...
-os.popen("python3 executeTree.py > treeOutput.txt &")
-#with urllib.request.urlopen('http://'+ipaddr+':'+port+'/cgi-bin/executeTree.py') as response:
-#   html = response.read()
-fileURL = 'http://'+ipaddr+':'+port+'/cgi-bin/treeOutput.txt'
+os.popen("python3 executeTree.py > ../htdocs/treeOutput.txt &")
+fileURL = 'http://'+ipaddr+':'+port+'/treeOutput.txt'
 linkToFile = "<a href=" + fileURL + "> click here</a>"
 
 print ("Content-type: text/html")
