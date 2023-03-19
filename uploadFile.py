@@ -5,15 +5,15 @@ Created on Sat Mar 18 17:05:13 2023
 
 @author: Eduardo Romero
 """
-#!/usr/bin/env python
+
 import cgi
 import os
 import zipfile
 import io
 import shutil
 
-UPLOAD_DIR = "/path/to/upload/directory"
-UNZIP_DIR = "/path/to/unzip/directory"
+UPLOAD_DIR = "/opt/bitnami/apache2/cgi-bin/"
+UNZIP_DIR = "/opt/bitnami/apache2/cgi-bin/"
 
 print("Content-Type: text/html")
 print()
