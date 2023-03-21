@@ -184,7 +184,7 @@ class Classifier:
         print("We needed samples: " + str(seenSamples))
         print("We needed features: " + str(self.featuresSeenSoFar))
         print("We saw total samples (include useless): " + str(timesOutOfLoop))
-        print("Reduction of samples: " + str(sampleReduction))
+        print("Reduction of samples: " + str(1 - sampleReduction))
     #def findOptimalSubset(self, usedSamples):
         
     
