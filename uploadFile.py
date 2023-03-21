@@ -38,8 +38,8 @@ print("<h1>Test dataset and model</h1>")
 print("<p>Please upload a dataset to be tested. The dataset should have the following format:</p>")
 print("<p>There should be one file called 'data_result_train.txt'</p>")
 print("<p>This file should have two columns. For each row, the first column has" 
-     + "a path to an image file and the second column should contain a value between 0 and 1"
-     +"indicating the classification of the model on that image.</p>")
+     + " a path to an image file and the second column should contain a value between 0 and 1"
+     +" indicating the classification of the model on that image.</p>")
 print("<p>For example: </p>")
 print("<p>nn_Data_Set_Cropped/training/0/DJI_0004_hw_0_0.jpg 0.3466 </p>")
 print("<p>Indicates that the image on the first column is classified as class 0 by the neural model. </p>")
@@ -83,9 +83,6 @@ else:
         
         print("<p>File uploaded and unzipped successfully. The dataset will be tested now.</p>")
         
-        with urllib.request.urlopen('http://'+ipaddr+':'+port+'/cgi-bin/evaluateFeatures.py') as response:
-           html = response.read()
-        print (html)
 
 print("</body>")
 print("</html>")
