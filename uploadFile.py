@@ -83,7 +83,7 @@ else:
         
         print("<p>File uploaded and unzipped successfully.</p>")
         print("<p>To test the dataset now call: </p>")
-        print("<p> 127.0.0.1:44445/cgi-bin/evaluateFeatures.py?ms=i44445treeinterpretability&port=44445&numPixels=n</p>")
+        print("<p> 127.0.0.1:44445/cgi-bin/evaluateFeatures.py?ms=i44445treeinterpretability&port=44445&numpixels=n</p>")
         print("<p>Where nxn is the number of pixels in the image (or the number of regions for reduced precision)</p>")
         
 print("</body>")

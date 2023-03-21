@@ -7,8 +7,8 @@ Created on Sun Mar 12 16:18:25 2023
 
 import cgi
 import cgitb
-import os
 import dns.resolver
+import subprocess
 
 cgitb.enable()
 with open('/etc/resolv.kube', 'r') as f:
@@ -25,7 +25,9 @@ numPixels = str(form.getvalue("numpixels"))
 item = item + ".default.svc.cluster.local"
 r = res.resolve(item, 'A')
 ipaddr = str(r[0])
-os.popen("python3 executeTree.py > ../htdocs/treeOutput.txt " + numPixels + " &")
+cmd = ["python3", "executeTree.py", numPixels]
+with open("../htdocs/treeOutput.txt", "wb") as f:
+    subprocess.Popen(cmd, stdout=f)
 fileURL = 'http://'+ipaddr+':'+port+'/treeOutput.txt'
 linkToFile = "<a href=" + fileURL + "> click here</a>"
 
