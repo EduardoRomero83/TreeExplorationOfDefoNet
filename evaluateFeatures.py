@@ -31,4 +31,12 @@ linkToFile = "<a href=" + fileURL + "> click here</a>"
 
 print ("Content-type: text/html")
 print ("")
+print("<html>")
+print("<head>")
+print("<title>Test dataset and model</title>")
+print("</head>")
+print("<body>")
+print("<h1>Test dataset and model</h1>")
 print ("<p>The output will be ready in a few minutes: " + linkToFile + "</p>")
+print("</body>")
+print("</html>")

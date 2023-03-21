@@ -30,11 +30,11 @@ print()
 
 print("<html>")
 print("<head>")
-print("<title>Test dataset and model</title>")
+print("<title>Upload dataset</title>")
 print("</head>")
 print("<body>")
 
-print("<h1>Test dataset and model</h1>")
+print("<h1>Upload dataset</h1>")
 print("<p>Please upload a dataset to be tested. The dataset should have the following format:</p>")
 print("<p>There should be one file called 'data_result_train.txt'</p>")
 print("<p>This file should have two columns. For each row, the first column has" 
