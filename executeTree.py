@@ -11,6 +11,7 @@ from sklearn.tree import export_graphviz
 from sklearn import tree as sktree
 from getInput import InputReader
 from scipy import stats
+import sys
 import random
 
 
@@ -22,9 +23,9 @@ Created on Mon Feb  7 20:00:28 2022
 
 class Classifier:
     
-    def __init__(self, classType, prevTrainPredictions = None, needPrev = False):
+    def __init__(self, classType, prevTrainPredictions = None, needPrev = False, numPixels = 108):
         self.classifierType = classType # tree or forest
-        self.inReader = InputReader()
+        self.inReader = InputReader(numPixels=numPixels)
         self.trainSetFile = "data_result_train.txt"
         self.testSetFile = "data_result_test.txt"
         self.prevTrainPred = prevTrainPredictions
@@ -256,10 +257,9 @@ class Classifier:
         
 
 if __name__ == "__main__":
-    print ("Content-type: text/html")
-    print ("")
+    numPixels = int(sys.argv[1])
     for i in range(1):
-        print("Execution number: " + str(i+1))
-        classifier = Classifier("forest")
+        #print("Execution number: " + str(i+1))
+        classifier = Classifier("forest", numPixels=numPixels)
         #classifier.test()
         classifier.testWithPath()

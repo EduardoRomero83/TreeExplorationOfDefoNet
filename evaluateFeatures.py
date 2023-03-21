@@ -20,11 +20,12 @@ res.nameservers = [ kubedns ]
 form = cgi.FieldStorage()
 item = str(form.getvalue("ms"))
 port = str(form.getvalue("port"))
+numPixels = str(form.getvalue("numpixels"))
 # The full DNS name is default.svc.cluster.local
 item = item + ".default.svc.cluster.local"
 r = res.resolve(item, 'A')
 ipaddr = str(r[0])
-os.popen("python3 executeTree.py > ../htdocs/treeOutput.txt &")
+os.popen("python3 executeTree.py > ../htdocs/treeOutput.txt " + numPixels + " &")
 fileURL = 'http://'+ipaddr+':'+port+'/treeOutput.txt'
 linkToFile = "<a href=" + fileURL + "> click here</a>"
 
