@@ -30,4 +30,4 @@ linkToFile = "<a href=" + fileURL + "> click here</a>"
 
 print ("Content-type: text/html")
 print ("")
-print ("The output will be ready in a few minutes: " + linkToFile)
+print ("<p>The output will be ready in a few minutes: " + linkToFile + "</p>")
