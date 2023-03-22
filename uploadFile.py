@@ -11,8 +11,6 @@ import cgitb
 import os
 import zipfile
 import io
-import shutil
-import urllib.request
 import dns.resolver
 
 UPLOAD_DIR = "/opt/bitnami/apache2/cgi-bin/"
@@ -51,9 +49,9 @@ print("<input type='submit' value='Upload and Unzip'>")
 print("</form>")
 
 form = cgi.FieldStorage()
-item = str(form.getvalue("ms"))
+ms = str(form.getvalue("ms"))
 port = str(form.getvalue("port"))
-item = item + ".default.svc.cluster.local"
+item = ms + ".default.svc.cluster.local"
 r = res.query(item, 'A')
 ipaddr = str(r[0])
 
@@ -80,10 +78,11 @@ else:
         # Unzip the file into the specified directory
         with zipfile.ZipFile(io.BytesIO(file.file.read())) as zip_ref:
             zip_ref.extractall(UNZIP_DIR)
-        
+        linkOfNextStep =" http://" + ipaddr + ":" + port + "/cgi-bin/evaluateFeatures.py?ms="
+        + ms + "&port=" + port + "&numpixels=n"
         print("<p>File uploaded and unzipped successfully.</p>")
         print("<p>To test the dataset now call: </p>")
-        print("<p> 127.0.0.1:44445/cgi-bin/evaluateFeatures.py?ms=i44445treeinterpretability&port=44445&numpixels=n</p>")
+        print("<p>" + linkOfNextStep + " </p>")
         print("<p>Where nxn is the number of pixels in the image (or the number of regions for reduced precision)</p>")
         
 print("</body>")
