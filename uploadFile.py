@@ -49,11 +49,6 @@ print("<input type='submit' value='Upload and Unzip'>")
 print("</form>")
 
 form = cgi.FieldStorage()
-ms = str(form.getvalue("ms"))
-port = str(form.getvalue("port"))
-item = ms + ".default.svc.cluster.local"
-r = res.query(item, 'A')
-ipaddr = str(r[0])
 
 
 # Check if the file was uploaded
@@ -78,11 +73,11 @@ else:
         # Unzip the file into the specified directory
         with zipfile.ZipFile(io.BytesIO(file.file.read())) as zip_ref:
             zip_ref.extractall(UNZIP_DIR)
-        linkOfNextStep =" http://" + ipaddr + ":" + port + "/cgi-bin/evaluateFeatures.py?ms="
-        + ms + "&port=" + port + "&numpixels=n"
+        linkOfNextStep =" http://127.0.0.1:44445/cgi-bin/evaluateFeatures.py?numpixels=n"
+        linkToCode = "<a href=" + linkOfNextStep + "> this link</a>"
         print("<p>File uploaded and unzipped successfully.</p>")
         print("<p>To test the dataset now call: </p>")
-        print("<p>" + linkOfNextStep + " </p>")
+        print("<p>" + linkToCode + " </p>")
         print("<p>Where nxn is the number of pixels in the image (or the number of regions for reduced precision)</p>")
         
 print("</body>")
