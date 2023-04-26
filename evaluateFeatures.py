@@ -1,10 +1,8 @@
 #!/usr/bin/python3
 """
 Created on Sun Mar 12 16:18:25 2023
-
 @author: Eduardo Romero
 """
-
 import cgi
 import cgitb
 import dns.resolver
@@ -16,15 +14,16 @@ with open('/etc/resolv.kube', 'r') as f:
 res = dns.resolver.Resolver(configure=False)
 res.nameservers = [ kubedns ]
 
-
 form = cgi.FieldStorage()
-numPixels = str(form.getvalue("numpixels"))
+numPixels = str(form.getvalue("p1"))
+state = str(form.getvalue("state"))
+state=state.replace("@","DAB")
 # The full DNS name is default.svc.cluster.local
-cmd = ["python3", "executeTree.py", numPixels]
-with open("../htdocs/treeOutput.txt", "wb") as f:
+cmd = ["python3", "executeTree.py", "16"]
+with open("/opt/bitnami/apache/htdocs/"+state+"treeOutput.txt", "wb") as f:
     subprocess.Popen(cmd, stdout=f)
-fileURL = 'http://127.0.0.1:44445/treeOutput.txt'
-linkToFile = "<a href=" + fileURL + "> click here</a>"
+fileURL = "/"+state+"treeOutput.txt"
+linkToFile = "<a href=\"" + fileURL + "\"> click here</a>"
 
 print ("Content-type: text/html")
 print ("")
