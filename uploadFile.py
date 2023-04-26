@@ -49,7 +49,8 @@ print("<input type='submit' value='Upload and Unzip'>")
 print("</form>")
 
 form = cgi.FieldStorage()
-
+state = str(form.getvalue("state"))
+state = state.replace("@","DAB")
 
 # Check if the file was uploaded
 if "file" not in form:
@@ -63,15 +64,17 @@ else:
     if not zipfile.is_zipfile(file.file):
         print("<p>File is not a ZIP archive.</p>")
     else:
-        # Save the file to the upload directory
-        with open(os.path.join(UPLOAD_DIR, filename), "wb") as f:
-            f.write(file.file.read())
-        
-        # Reset the file position before extracting
-        file.file.seek(0)
+       # Save the file to the upload directory
+        filepath = os.path.join(UPLOAD_DIR, filename)
+        with open(filepath, "wb") as f:
+            while True:
+                chunk = file.file.read(1024*1024)  # Read 1MB at a time
+                if not chunk:
+                    break
+                f.write(chunk)
         
         # Unzip the file into the specified directory
-        with zipfile.ZipFile(io.BytesIO(file.file.read())) as zip_ref:
+        with zipfile.ZipFile(filepath) as zip_ref:
             zip_ref.extractall(UNZIP_DIR)
         linkOfNextStep =" http://127.0.0.1:44445/cgi-bin/evaluateFeatures.py?numpixels=n"
         linkToCode = "<a href=" + linkOfNextStep + "> this link</a>"
