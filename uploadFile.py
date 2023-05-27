@@ -57,6 +57,7 @@ if "file" in form and "upload" in form:
     else:
         # Save the file to the upload directory
         with open(os.path.join(UPLOAD_DIR, filename), "wb") as f:
+           file.file.seek(0)
            f.write(file.file.read())
         
         # Reset the file position before extracting
