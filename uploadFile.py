@@ -67,10 +67,18 @@ if "link" in form and "upload" in form:
             print("<p>File is not a ZIP archive.</p>")
 
         else:
-            # Unzip the file into the specified directory
-            with zipfile.ZipFile(filename, 'r') as zip_ref:
-                zip_ref.extractall(unzipDirectory)
-            print("<p>File unzipped successfully.</p>")
+            # Reset the file position before extracting
+            print("<p>File uploaded successfully. Please unzip it now</p>")
+            print("<form method='post' enctype='multipart/form-data'>")
+            print("<input type='hidden' name='filename' value='" + filename + "'>")
+            print("<input type='submit' name='unzip' value='Unzip'>")
+            print("</form>")
+            
+if "filename" in form and "unzip" in form:
+    # Unzip the file into the specified directory
+    with zipfile.ZipFile(filename, 'r') as zip_ref:
+        zip_ref.extractall(unzipDirectory)
+    print("<p>File unzipped successfully.</p>")
 
 print("</body>")
 print("</html>")
