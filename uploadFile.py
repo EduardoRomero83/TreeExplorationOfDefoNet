@@ -64,12 +64,12 @@ if "link" in form and "upload" in form:
             f.write(requests.get(link).content)
             # Check if the file is a ZIP archive
             
-        if not zipfile.is_zipfile(filename.file):
+        if not zipfile.is_zipfile(filename):
             print("<p>File is not a ZIP archive.</p>")
 
         else:
             # Unzip the file into the specified directory
-            with zipfile.ZipFile(os.path(filename), 'r') as zip_ref:
+            with zipfile.ZipFile(filename, 'r') as zip_ref:
                 zip_ref.extractall(unzipDirectory)
             print("<p>File unzipped successfully.</p>")
 
