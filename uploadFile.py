@@ -59,10 +59,14 @@ if "link" in form and "upload" in form:
        print("<p>Invalid link.</p>")
     else:
         # Download the file from the link
-        with open(filename, "wb") as f:
-            f.write(requests.get(link).content)
-            # Check if the file is a ZIP archive
-            
+        response = requests.get(link, stream=True, timeout=10000)
+        if response.status_code == 200:
+            with open(filename, "wb") as f:
+                for chunk in response.iter_content(chunk_size=1024):
+                    if chunk:
+                        f.write(chunk)
+                        
+        # Check if the file is a ZIP archive
         if not zipfile.is_zipfile(filename):
             print("<p>File is not a ZIP archive.</p>")
 
