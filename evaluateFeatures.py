@@ -19,7 +19,7 @@ numPixels = str(form.getvalue("p1"))
 state = str(form.getvalue("state"))
 state = state.replace("@","DAB")
 # The full DNS name is default.svc.cluster.local
-cmd = ["python3", "executeTree.py", numPixels]
+cmd = ["python3", "executeTree.py", numPixels, state]
 with open("/opt/bitnami/apache/htdocs/"+state+"treeOutput.txt", "wb") as f:
     subprocess.Popen(cmd, stdout=f)
 fileURL = "/"+state+"treeOutput.txt"

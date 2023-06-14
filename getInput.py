@@ -14,7 +14,7 @@ from attention import Attention
 
 class InputReader:
     
-    def __init__(self, numPixels = 108):
+    def __init__(self, numPixels = 108, state = None):
         self.pixels = numPixels
         self.colorChannels = 1
         self.rotationAngles = []
@@ -24,6 +24,7 @@ class InputReader:
         self.maxImages = 400
         self.minNeg = self.maxImages / 2
         self.limitImages = False
+        self.state = state
         self.imageSize = (self.pixels * self.pixels 
                           * self.colorChannels)
         if self.useAttention:
@@ -92,11 +93,11 @@ class InputReader:
         negativeSamples = 0
         for line in lines:
             fullLine = line.split()
-            imageFileName = fullLine[0]
+            imageFileName = self.state + "/" + fullLine[0]
             value = float(fullLine[1])
             imageArray = self.createDataset(imageFileName)
             breakDownFileName = imageFileName.split("/")
-            groundTruth = int(breakDownFileName[2])
+            groundTruth = int(breakDownFileName[3])
             if value >= 0.5:
                 value = 1
                 positiveSamples += 1

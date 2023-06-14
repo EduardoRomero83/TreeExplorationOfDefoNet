@@ -23,11 +23,11 @@ Created on Mon Feb  7 20:00:28 2022
 
 class Classifier:
     
-    def __init__(self, classType, prevTrainPredictions = None, needPrev = False, numPixels = 108):
+    def __init__(self, classType, prevTrainPredictions = None, needPrev = False, numPixels = 108, state = None):
         self.classifierType = classType # tree or forest
-        self.inReader = InputReader(numPixels=numPixels)
-        self.trainSetFile = "data_result_train.txt"
-        self.testSetFile = "data_result_test.txt"
+        self.inReader = InputReader(numPixels=numPixels, state= state)
+        self.trainSetFile = state + "/data_result_train.txt"
+        self.testSetFile = state + "/data_result_test.txt"
         self.prevTrainPred = prevTrainPredictions
         self.prevTestPred = None
         self.needPrevPred = needPrev
@@ -258,8 +258,9 @@ class Classifier:
 
 if __name__ == "__main__":
     numPixels = int(sys.argv[1])
+    state = sys.argv[2]
     for i in range(1):
         #print("Execution number: " + str(i+1))
-        classifier = Classifier("forest", numPixels=numPixels)
+        classifier = Classifier("forest", numPixels=numPixels, state=state)
         #classifier.test()
         classifier.testWithPath()

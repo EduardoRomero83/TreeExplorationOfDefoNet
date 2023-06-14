@@ -1,7 +1,5 @@
 #!/usr/bin/python3
 
-#!/usr/bin/python3
-
 """
 Created on Sat Mar 18 17:05:13 2023
 
@@ -13,8 +11,8 @@ import cgitb
 import os
 import zipfile
 import io
+import requests
 
-UPLOAD_DIR = "/opt/bitnami/apache2/cgi-bin/"
 UNZIP_DIR = "/opt/bitnami/apache2/cgi-bin/"
 
 cgitb.enable()
@@ -45,35 +43,36 @@ print("<input type='submit' name='upload' value='Upload'>")
 print("</form>")
 
 form = cgi.FieldStorage()
+state = str(form.getvalue("state"))
+state = state.replace("@","DAB")
+unzipDirectory = UNZIP_DIR + state + "/"
+
+if not os.path.isdir("unzipDirectory"):
+    os.mkdir("unzipDirectory")
+
 
 if "file" in form and "upload" in form:
     # Get the file and filename
-    file = form["file"]
-    filename = os.path.basename(file.filename)
-
-    # Check if the file is a ZIP archive
-    if not zipfile.is_zipfile(file.file):
-        print("<p>File is not a ZIP archive.</p>")
+    link = form["link"].value
+    filename = unzipDirectory + "dataset.zip"
+    
+    # Check if the link is valid
+    if not link:
+       print("<p>Invalid link.</p>")
     else:
-        # Save the file to the upload directory
-        with open(os.path.join(UPLOAD_DIR, filename), "wb") as f:
-           file.file.seek(0)
-           f.write(file.file.read())
-        
-        # Reset the file position before extracting
-        file.file.seek(0)
-        print("<p>File uploaded successfully. Please unzip it now</p>")
-        print("<form method='post' enctype='multipart/form-data'>")
-        print("<input type='hidden' name='filename' value='" + filename + "'>")
-        print("<input type='submit' name='unzip' value='Unzip'>")
-        print("</form>")
+        # Download the file from the link
+        with io.open(os.path(filename), "wb") as f:
+            f.write(requests.get(link).content)
+            # Check if the file is a ZIP archive
+            
+        if not zipfile.is_zipfile(filename.file):
+            print("<p>File is not a ZIP archive.</p>")
 
-if "filename" in form and "unzip" in form:
-    filename = form["filename"].value
-    # Unzip the file into the specified directory
-    with zipfile.ZipFile(os.path.join(UPLOAD_DIR, filename), 'r') as zip_ref:
-        zip_ref.extractall(UNZIP_DIR)
-    print("<p>File unzipped successfully.</p>")
+        else:
+            # Unzip the file into the specified directory
+            with zipfile.ZipFile(os.path(filename), 'r') as zip_ref:
+                zip_ref.extractall(unzipDirectory)
+            print("<p>File unzipped successfully.</p>")
 
 print("</body>")
 print("</html>")
