@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-
 """
 Created on Sat Mar 18 17:05:13 2023
 
@@ -38,7 +37,7 @@ print("<p>Indicates that the image on the first column is classified as class 0 
 print("<p>The dataset should contain a similar file called  'data_result_test.txt' that follows a similar format.</p>")
 print("<p>Finally the dataset should contain a folder containing all the images in the path specified in the previous two files. </p>")
 print("<form method='post' enctype='multipart/form-data'>")
-print("<input type='file' name='file'>")
+print("<input type='text' name='link' placeholder='Enter a link to the file'>")
 print("<input type='submit' name='upload' value='Upload'>")
 print("</form>")
 
@@ -51,7 +50,7 @@ if not os.path.isdir("unzipDirectory"):
     os.mkdir("unzipDirectory")
 
 
-if "file" in form and "upload" in form:
+if "link" in form and "upload" in form:
     # Get the file and filename
     link = form["link"].value
     filename = unzipDirectory + "dataset.zip"
