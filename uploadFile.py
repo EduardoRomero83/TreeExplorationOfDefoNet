@@ -10,6 +10,8 @@ import cgitb
 import os
 import zipfile
 import requests
+import sys
+sys.setrecursionlimit(10000)
 
 UNZIP_DIR = "/opt/bitnami/apache2/cgi-bin/"
 
@@ -59,7 +61,7 @@ if "link" in form and "upload" in form:
        print("<p>Invalid link.</p>")
     else:
         # Download the file from the link
-        response = requests.get(link, stream=True, timeout=10000)
+        response = requests.get(link, stream=True, timeout=10000000)
         if response.status_code == 200:
             with open(filename, "wb") as f:
                 for chunk in response.iter_content(chunk_size=1024):
