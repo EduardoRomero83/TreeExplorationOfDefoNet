@@ -59,7 +59,7 @@ if "link" in form and "upload" in form:
        print("<p>Invalid link.</p>")
     else:
         # Download the file from the link
-        with open(os.path(filename), "wb") as f:
+        with open(filename, "wb") as f:
             f.write(requests.get(link).content)
             # Check if the file is a ZIP archive
             
