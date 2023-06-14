@@ -9,7 +9,6 @@ import cgi
 import cgitb
 import os
 import zipfile
-import io
 import requests
 
 UNZIP_DIR = "/opt/bitnami/apache2/cgi-bin/"
@@ -46,8 +45,8 @@ state = str(form.getvalue("state"))
 state = state.replace("@","DAB")
 unzipDirectory = UNZIP_DIR + state + "/"
 
-if not os.path.isdir("unzipDirectory"):
-    os.mkdir("unzipDirectory")
+if not os.path.isdir(unzipDirectory):
+    os.mkdir(unzipDirectory)
 
 
 if "link" in form and "upload" in form:
@@ -60,7 +59,7 @@ if "link" in form and "upload" in form:
        print("<p>Invalid link.</p>")
     else:
         # Download the file from the link
-        with io.open(os.path(filename), "wb") as f:
+        with open(os.path(filename), "wb") as f:
             f.write(requests.get(link).content)
             # Check if the file is a ZIP archive
             
