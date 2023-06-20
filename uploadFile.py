@@ -10,8 +10,6 @@ import cgitb
 import os
 import zipfile
 import subprocess
-import sys
-sys.setrecursionlimit(10000)
 
 UNZIP_DIR = "/opt/bitnami/apache2/cgi-bin/"
 
@@ -71,11 +69,10 @@ if "link" in form and "upload" in form:
         #            if chunk:
         #                f.write(chunk)
         
-    p1status = p1.wait()
-    if p1status == 0:
-        fileDownloaded = True
+    while p1.poll() is None:
+        pass
             
-if fileDownloaded:
+if p1.returncode == 0:
     print("<p>Download finished succesfully.</p>")
     # Check if the file is a ZIP archive
     if not zipfile.is_zipfile(filename):
