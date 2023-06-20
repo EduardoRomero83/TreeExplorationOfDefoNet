@@ -9,7 +9,7 @@ import cgi
 import cgitb
 import os
 import zipfile
-import requests
+import subprocess
 import sys
 sys.setrecursionlimit(10000)
 
@@ -50,35 +50,43 @@ unzipDirectory = UNZIP_DIR + state + "/"
 if not os.path.isdir(unzipDirectory):
     os.mkdir(unzipDirectory)
 
-
 if "link" in form and "upload" in form:
     # Get the file and filename
     link = form["link"].value
     filename = unzipDirectory + "dataset.zip"
+    cmd = ["wget", "-O", filename, link]
     
     # Check if the link is valid
     if not link:
        print("<p>Invalid link.</p>")
     else:
         # Download the file from the link
-        response = requests.get(link, stream=True, timeout=10000000)
-        if response.status_code == 200:
-            with open(filename, "wb") as f:
-                for chunk in response.iter_content(chunk_size=1024):
-                    if chunk:
-                        f.write(chunk)
-                        
-        # Check if the file is a ZIP archive
-        if not zipfile.is_zipfile(filename):
-            print("<p>File is not a ZIP archive.</p>")
-
+        p1 = subprocess.Popen(cmd)
+        print("<p>Download started</p>")
+        #response = requests.get(link, stream=True, timeout=10000000)
+        #if response.status_code == 200:
+        #    with open(filename, "wb") as f:
+        #        for chunk in response.iter_content(chunk_size=1024):
+        #            if chunk:
+        #                f.write(chunk)
+        
+        p1status = p1.wait()
+        
+        if p1status == 0:
+            print("<p>Download finished succesfully</p>")
+            # Check if the file is a ZIP archive
+            if not zipfile.is_zipfile(filename):
+                print("<p>Error: File is not a ZIP archive.</p>")
+    
+            else:
+                # Reset the file position before extracting
+                print("<p>Please unzip the file now</p>")
+                print("<form method='post' enctype='multipart/form-data'>")
+                print("<input type='hidden' name='filename' value='" + filename + "'>")
+                print("<input type='submit' name='unzip' value='Unzip'>")
+                print("</form>")
         else:
-            # Reset the file position before extracting
-            print("<p>File uploaded successfully. Please unzip it now</p>")
-            print("<form method='post' enctype='multipart/form-data'>")
-            print("<input type='hidden' name='filename' value='" + filename + "'>")
-            print("<input type='submit' name='unzip' value='Unzip'>")
-            print("</form>")
+            print("<p>Download failed.</p>")
             
 if "filename" in form and "unzip" in form:
     # Unzip the file into the specified directory
