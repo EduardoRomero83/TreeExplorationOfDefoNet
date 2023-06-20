@@ -46,6 +46,7 @@ form = cgi.FieldStorage()
 state = str(form.getvalue("state"))
 state = state.replace("@","DAB")
 unzipDirectory = UNZIP_DIR + state + "/"
+fileDownloaded = False
 
 if not os.path.isdir(unzipDirectory):
     os.mkdir(unzipDirectory)
@@ -70,9 +71,11 @@ if "link" in form and "upload" in form:
         #            if chunk:
         #                f.write(chunk)
         
-p1status = p1.wait()
-        
-if p1status == 0:
+    p1status = p1.wait()
+    if p1status == 0:
+        fileDownloaded = True
+            
+if fileDownloaded:
     print("<p>Download finished succesfully.</p>")
     # Check if the file is a ZIP archive
     if not zipfile.is_zipfile(filename):
