@@ -10,6 +10,7 @@ import cgitb
 import os
 import zipfile
 import subprocess
+import time
 
 UNZIP_DIR = "/opt/bitnami/apache2/cgi-bin/"
 
@@ -55,25 +56,41 @@ if "link" in form and "upload" in form:
     # Get the file and filename
     link = form["link"].value
     cmd = ["wget", "-O", filename, link]
-    
+
     # Check if the link is valid
     if not link:
-       print("<p>Invalid link.</p>")
+        print("<p>Invalid link.</p>")
     else:
-        # Download the file from the link in the background
-        with subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE) as p1:
-            stdout, stderr = p1.communicate()
-            print("<p>Download started.</p>")
+        # Download the file from the link
+        subprocess.Popen(cmd)
+        print("<p>Download started.</p>")
 
-            # Check if the download is finished
-            if p1.returncode == 0:
-                fileDownloaded = True
-                with zipfile.ZipFile(filename, 'r') as zip_ref:
-                    zip_ref.extractall(unzipDirectory)
-                print("<p>File unzipped successfully.</p>")
-            else:
-                print(f"Download failed. Error code: {p1.returncode}")
-                print(stderr.decode("utf-8"))
+        while not os.path.exists(filename):
+            time.sleep(1)  # Wait until the file is downloaded
+
+        fileDownloaded = True
+
+if fileDownloaded:
+    print("<p>Download finished succesfully.</p>")
+    # Check if the file is a ZIP archive
+    if not zipfile.is_zipfile(filename):
+        print("<p>Error: File is not a ZIP archive.</p>")
+
+    else:
+        # Reset the file position before extracting
+        print("<p>Please unzip the file now</p>")
+        print("<form method='post' enctype='multipart/form-data'>")
+        print("<input type='hidden' name='filename' value='" + filename + "'>")
+        print("<input type='submit' name='unzip' value='Unzip'>")
+        print("</form>")
+else:
+    print("<p>Download failed.</p>")
+            
+if "filename" in form and "unzip" in form:
+    # Unzip the file into the specified directory
+    with zipfile.ZipFile(filename, 'r') as zip_ref:
+        zip_ref.extractall(unzipDirectory)
+    print("<p>File unzipped successfully.</p>")
 
 print("</body>")
 print("</html>")
