@@ -50,6 +50,7 @@ filename = unzipDirectory + "dataset.zip"
 if not os.path.isdir(unzipDirectory):
     os.mkdir(unzipDirectory)
 
+
 if "link" in form and "upload" in form:
     # Get the file and filename
     link = form["link"].value
@@ -60,22 +61,19 @@ if "link" in form and "upload" in form:
        print("<p>Invalid link.</p>")
     else:
         # Download the file from the link in the background
-        p1 = subprocess.Popen(cmd)
-        print("<p>Download started.</p>")
+        with subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE) as p1:
+            stdout, stderr = p1.communicate()
+            print("<p>Download started.</p>")
 
-    # Check if the download is finished
-    while p1.poll() is None:
-        pass
-
-    # If the download is finished, unzip the file
-    if p1.returncode == 0:
-        fileDownloaded = True
-        with zipfile.ZipFile(filename, 'r') as zip_ref:
-            zip_ref.extractall(unzipDirectory)
-        print("<p>File unzipped successfully.</p>")
-
-else:
-    print("<p>Download failed.</p>")
+            # Check if the download is finished
+            if p1.returncode == 0:
+                fileDownloaded = True
+                with zipfile.ZipFile(filename, 'r') as zip_ref:
+                    zip_ref.extractall(unzipDirectory)
+                print("<p>File unzipped successfully.</p>")
+            else:
+                print(f"Download failed. Error code: {p1.returncode}")
+                print(stderr.decode("utf-8"))
 
 print("</body>")
 print("</html>")
