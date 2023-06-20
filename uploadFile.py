@@ -72,19 +72,19 @@ if "link" in form and "upload" in form:
     while p1.poll() is None:
         pass
             
-if p1.returncode == 0:
-    print("<p>Download finished succesfully.</p>")
-    # Check if the file is a ZIP archive
-    if not zipfile.is_zipfile(filename):
-        print("<p>Error: File is not a ZIP archive.</p>")
-
-    else:
-        # Reset the file position before extracting
-        print("<p>Please unzip the file now</p>")
-        print("<form method='post' enctype='multipart/form-data'>")
-        print("<input type='hidden' name='filename' value='" + filename + "'>")
-        print("<input type='submit' name='unzip' value='Unzip'>")
-        print("</form>")
+    if p1.returncode == 0:
+        print("<p>Download finished succesfully.</p>")
+        # Check if the file is a ZIP archive
+        if not zipfile.is_zipfile(filename):
+            print("<p>Error: File is not a ZIP archive.</p>")
+    
+        else:
+            # Reset the file position before extracting
+            print("<p>Please unzip the file now</p>")
+            print("<form method='post' enctype='multipart/form-data'>")
+            print("<input type='hidden' name='filename' value='" + filename + "'>")
+            print("<input type='submit' name='unzip' value='Unzip'>")
+            print("</form>")
 else:
     print("<p>Download failed.</p>")
             
