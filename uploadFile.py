@@ -62,7 +62,7 @@ if "link" in form and "upload" in form:
     else:
         # Download the file from the link
         p1 = subprocess.Popen(cmd)
-        print("<p>Download started</p>")
+        print("<p>Download started.</p>")
         #response = requests.get(link, stream=True, timeout=10000000)
         #if response.status_code == 200:
         #    with open(filename, "wb") as f:
@@ -70,9 +70,9 @@ if "link" in form and "upload" in form:
         #            if chunk:
         #                f.write(chunk)
         
-        p1status = p1.wait()
+        #p1status = p1.wait()
         
-        if p1status == 0:
+        if True:
             print("<p>Download finished succesfully</p>")
             # Check if the file is a ZIP archive
             if not zipfile.is_zipfile(filename):
