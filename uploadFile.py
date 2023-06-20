@@ -47,6 +47,7 @@ state = str(form.getvalue("state"))
 state = state.replace("@","DAB")
 unzipDirectory = UNZIP_DIR + state + "/"
 fileDownloaded = False
+filename = unzipDirectory + "dataset.zip"
 
 if not os.path.isdir(unzipDirectory):
     os.mkdir(unzipDirectory)
@@ -54,7 +55,6 @@ if not os.path.isdir(unzipDirectory):
 if "link" in form and "upload" in form:
     # Get the file and filename
     link = form["link"].value
-    filename = unzipDirectory + "dataset.zip"
     cmd = ["wget", "-O", filename, link]
     
     # Check if the link is valid
