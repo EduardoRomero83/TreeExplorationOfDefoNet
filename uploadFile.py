@@ -70,23 +70,23 @@ if "link" in form and "upload" in form:
         #            if chunk:
         #                f.write(chunk)
         
-        #p1status = p1.wait()
+p1status = p1.wait()
         
-        if True:
-            print("<p>Download finished succesfully</p>")
-            # Check if the file is a ZIP archive
-            if not zipfile.is_zipfile(filename):
-                print("<p>Error: File is not a ZIP archive.</p>")
-    
-            else:
-                # Reset the file position before extracting
-                print("<p>Please unzip the file now</p>")
-                print("<form method='post' enctype='multipart/form-data'>")
-                print("<input type='hidden' name='filename' value='" + filename + "'>")
-                print("<input type='submit' name='unzip' value='Unzip'>")
-                print("</form>")
-        else:
-            print("<p>Download failed.</p>")
+if p1status == 0:
+    print("<p>Download finished succesfully.</p>")
+    # Check if the file is a ZIP archive
+    if not zipfile.is_zipfile(filename):
+        print("<p>Error: File is not a ZIP archive.</p>")
+
+    else:
+        # Reset the file position before extracting
+        print("<p>Please unzip the file now</p>")
+        print("<form method='post' enctype='multipart/form-data'>")
+        print("<input type='hidden' name='filename' value='" + filename + "'>")
+        print("<input type='submit' name='unzip' value='Unzip'>")
+        print("</form>")
+else:
+    print("<p>Download failed.</p>")
             
 if "filename" in form and "unzip" in form:
     # Unzip the file into the specified directory
