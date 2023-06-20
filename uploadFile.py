@@ -59,40 +59,23 @@ if "link" in form and "upload" in form:
     if not link:
        print("<p>Invalid link.</p>")
     else:
-        # Download the file from the link
+        # Download the file from the link in the background
         p1 = subprocess.Popen(cmd)
         print("<p>Download started.</p>")
-        #response = requests.get(link, stream=True, timeout=10000000)
-        #if response.status_code == 200:
-        #    with open(filename, "wb") as f:
-        #        for chunk in response.iter_content(chunk_size=1024):
-        #            if chunk:
-        #                f.write(chunk)
-        
+
+    # Check if the download is finished
     while p1.poll() is None:
         pass
-            
+
+    # If the download is finished, unzip the file
     if p1.returncode == 0:
-        print("<p>Download finished succesfully.</p>")
-        # Check if the file is a ZIP archive
-        if not zipfile.is_zipfile(filename):
-            print("<p>Error: File is not a ZIP archive.</p>")
-    
-        else:
-            # Reset the file position before extracting
-            print("<p>Please unzip the file now</p>")
-            print("<form method='post' enctype='multipart/form-data'>")
-            print("<input type='hidden' name='filename' value='" + filename + "'>")
-            print("<input type='submit' name='unzip' value='Unzip'>")
-            print("</form>")
+        fileDownloaded = True
+        with zipfile.ZipFile(filename, 'r') as zip_ref:
+            zip_ref.extractall(unzipDirectory)
+        print("<p>File unzipped successfully.</p>")
+
 else:
     print("<p>Download failed.</p>")
-            
-if "filename" in form and "unzip" in form:
-    # Unzip the file into the specified directory
-    with zipfile.ZipFile(filename, 'r') as zip_ref:
-        zip_ref.extractall(unzipDirectory)
-    print("<p>File unzipped successfully.</p>")
 
 print("</body>")
 print("</html>")
