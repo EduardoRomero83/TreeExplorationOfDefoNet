@@ -73,7 +73,7 @@ if "link" in form and "upload" in form:
 
         fileDownloaded = True
 
-elif fileDownloaded:
+if fileDownloaded:
     print("<p>Download finished succesfully.</p>")
     while not os.path.getsize(filename) == os.path.getsize(filename):
         time.sleep(1)
@@ -89,14 +89,12 @@ elif fileDownloaded:
         print("<input type='submit' name='unzip' value='Unzip'>")
         print("</form>")
             
-elif "filename" in form and "unzip" in form:
+if "filename" in form and "unzip" in form:
     # Unzip the file into the specified directory
     with zipfile.ZipFile(filename, 'r') as zip_ref:
         zip_ref.extractall(unzipDirectory)
     print("<p>File unzipped successfully.</p>")
     
-else:
-    print("<p>Download failed.</p>")
 
 print("</body>")
 print("</html>")
