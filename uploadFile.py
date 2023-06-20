@@ -75,8 +75,13 @@ if "link" in form and "upload" in form:
 
 if fileDownloaded:
     print("<p>Download finished succesfully.</p>")
-    while not os.path.getsize(filename) == os.path.getsize(filename):
+    fileDone = False
+    while not fileDone:
+        size1 = os.path.getsize(filename)
         time.sleep(1)
+        size2 = os.path.getsize(filename)
+        if size1 == size2:
+            fileDone = True
     # Check if the file is a ZIP archive
     if not zipfile.is_zipfile(filename):
         print("<p>Error: File is not a ZIP archive.</p>")
