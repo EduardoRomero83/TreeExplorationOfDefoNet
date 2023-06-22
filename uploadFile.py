@@ -47,7 +47,6 @@ if not "p1" in form:
     print('<form method="get" action="/cgi-bin/uploadFile.py" enctype="multipart/form-data">')
     print('<input type = "hidden" name = "ms" value = "i44445treeinterpretability">')
     print('<input type = "hidden" name = "port" value = "44445">')
-    print('<input type = "hidden" name = "state" value = ' + state + '>')
     print('<input type = "hidden" name = "path" value = "/cgi-bin/">')
     print('<input type = "hidden" name = "page" value = "uploadFile.py">')	 
     print("<input type='text' name='p1' placeholder='Enter a link to the file'>")
