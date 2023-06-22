@@ -5,7 +5,6 @@
 import cgi
 import cgitb
 import os
-import zipfile
 import subprocess
 
 UNZIP_DIR = "/opt/bitnami/apache2/cgi-bin/"
@@ -69,16 +68,9 @@ else:
         # Download the file from the link
         p1 = subprocess.Popen(cmd)
         print("<p>Download started.</p>")
-        p1.wait()
-        fileDownloaded = True
-    if fileDownloaded:
-        print("<p>Download finished succesfully.</p>")
-    if not zipfile.is_zipfile(filename):
-        print("<p>Error: File is not a ZIP archive.</p>")
-    else:
-        with zipfile.ZipFile(filename, 'r') as zip_ref:
-            zip_ref.extractall(unzipDirectory)
-        print("<p>File unzipped successfully.</p>")
+        print("<p>Please allow a few minutes for the download to complete.</p>")
+        cmd = ["python3", "unzip.py", str(p1.pid), filename, unzipDirectory]
+        subprocess.Popen(cmd)
 
 print("</body>")
 print("</html>")
