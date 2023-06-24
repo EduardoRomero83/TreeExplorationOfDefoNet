@@ -66,11 +66,11 @@ else:
         print("<p>Invalid link.</p>")
     else:
         # Download the file from the link
-        p1 = subprocess.Popen(cmd)
+        p1 = subprocess.Popen(cmd, shell=False, close_fds=True)
         print("<p>Download started.</p>")
         print("<p>Please allow a few minutes for the download to complete.</p>")
         cmd = ["python3", "unzip.py", str(p1.pid), filename, unzipDirectory]
-        subprocess.Popen(cmd)
+        subprocess.Popen(cmd, shell=False, close_fds=True)
 
 print("</body>")
 print("</html>")
