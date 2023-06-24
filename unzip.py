@@ -10,15 +10,18 @@ import psutil
 
 
 def check_process_done(pid):
-    process = psutil.Process(pid)
-    return not process.is_running()
+    try:
+        process = psutil.Process(pid)
+        return process.is_running()
+    except:
+        return False
 
 
 if __name__ == "__main__":
     pid = int(sys.argv[1])
     filename = sys.argv[2]
     unzipDirectory = sys.argv[3]
-    while not check_process_done(pid):
+    while check_process_done(pid):
         pass
 
     if zipfile.is_zipfile(filename):
