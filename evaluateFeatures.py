@@ -20,9 +20,9 @@ state = str(form.getvalue("state"))
 state = state.replace("@","DAB")
 # The full DNS name is default.svc.cluster.local
 
-cmdString = "python3 executeTree.py " + numPixels + " " + state + " & < /dev/null"
+cmdString = "python3 executeTree.py " + numPixels + " " + state 
 fileOutput = "/opt/bitnami/apache/htdocs/"+state+"treeOutput.txt"
-cmdString = cmdString + " > " + fileOutput
+cmdString = cmdString + " > " + fileOutput + " & < /dev/null"
 os.system(cmdString)
 fileURL = "/"+state+"treeOutput.txt"
 linkToFile = "<a href=\"" + fileURL + "\"> click here</a>"
