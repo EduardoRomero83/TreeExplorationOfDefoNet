@@ -6,7 +6,7 @@ Created on Sun Mar 12 16:18:25 2023
 import cgi
 import cgitb
 import dns.resolver
-import os
+import subprocess
 
 cgitb.enable()
 with open('/etc/resolv.kube', 'r') as f:
@@ -19,11 +19,9 @@ numPixels = str(form.getvalue("p1"))
 state = str(form.getvalue("state"))
 state = state.replace("@","DAB")
 # The full DNS name is default.svc.cluster.local
-
-cmdString = "python3 executeTree.py " + numPixels + " " + state 
-fileOutput = "/opt/bitnami/apache/htdocs/"+state+"treeOutput.txt"
-cmdString = cmdString + " > " + fileOutput + " & < /dev/null"
-os.system(cmdString)
+cmd = ["python3", "executeTree.py", numPixels, state]
+with open("/opt/bitnami/apache/htdocs/"+state+"treeOutput.txt", "wb") as f:
+    subprocess.Popen(cmd, stdout=f, shell=False, close_fds=True)
 fileURL = "/"+state+"treeOutput.txt"
 linkToFile = "<a href=\"" + fileURL + "\"> click here</a>"
 
