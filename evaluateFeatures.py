@@ -16,6 +16,8 @@ res.nameservers = [ kubedns ]
 
 form = cgi.FieldStorage()
 numPixels = str(form.getvalue("p1"))
+if numPixels == "None":
+    numPixels = "4"
 state = str(form.getvalue("state"))
 state = state.replace("@","DAB")
 # The full DNS name is default.svc.cluster.local
